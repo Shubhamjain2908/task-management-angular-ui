@@ -8,14 +8,14 @@ export const Full_ROUTES: Routes = [
     loadChildren: './dashboard/dashboard.module#DashboardModule',
     canActivate: [AuthGuard]
   },
-  {
-    path: 'profile',
-    loadChildren: './profile/profile.module#ProfileModule',
-    canActivate: [AuthGuard]
-  },
+  // {
+  //   path: 'profile',
+  //   loadChildren: './profile/profile.module#ProfileModule',
+  //   canActivate: [AuthGuard]
+  // },
   {
     path: 'task',
-    loadChildren: './taskboard/taskboard.module#TaskboardModule',
+    loadChildren: './task/task.module#TaskModule',
     canActivate: [AuthGuard]
   }
 ];

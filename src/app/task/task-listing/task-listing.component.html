@@ -1,0 +1,137 @@
+<div class="row text-left">
+  <div class="col-12">
+    <div class="content-header">Task</div>
+  </div>
+</div>
+
+<!--Advanced filter Starts-->
+<section id="advanced">
+  <div class="row text-left" matchHeight="card">
+    <div class="col-sm-12">
+      <div class="card fixedHeight">
+        <div class="card-header">
+          <h4 class="card-title">User Task Listing</h4>
+          <button class="btn btn-primary btn-raised pull-right" (click)="open(content)"><i
+              class="ft-plus font-medium-3 mr-2"></i>Add Task</button>
+        </div>
+        <div class="card-body">
+          <div class="card-block">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Task Name</th>
+                  <th>Description</th>
+                  <th>Created At</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody class="{{table_loader_class}}">
+                <tr *ngFor="let key of data;let i = index">
+                  <th scope="row">{{ i - 9 + page*10 }}</th>
+                  <td>{{ key.title }}</td>
+                  <td>{{ key.description }}</td>
+                  <td>{{ key.created_at | date: 'MMM d, y hh:mm:ss' }}</td>
+                  <!-- <td>{{ key.status }}</td> -->
+                  <td>
+                    <select name="status" class="form-control form-control-sm" aria-describedby="basic-addon3"
+                      (change)="onChangeStatus(key.id, $event.target.value)" [value]="key.status">
+                      <option value="ON">ON</option>
+                      <option value="INPROGRESS">In Progress</option>
+                      <option value="DONE">DONE</option>
+                    </select>
+                  </td>
+
+                  <td>
+                    <a class="success p-0" data-original-title="" title="" (click)="openUpdTask(updateTaskContent,key)">
+                      <i class="ft-edit-2 font-medium-3 mr-2"></i>
+                    </a>
+                    <a class="danger p-0" data-original-title="" title="" (click)="confirmTextTask(key)">
+                      <i class="ft-x font-medium-3 mr-2"></i>
+                    </a>
+                  </td>
+                </tr>
+                <tr *ngIf="noRecordErr">
+                  <td colspan="7">
+                    <div class="emty-container">
+                      <p> No Data Found</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!--Advanced filter Ends-->
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <form [formGroup]="addTaskForm" (ngSubmit)="onAddTask()">
+    <div class="modal-header">
+      <h4 class="modal-title">Add Task</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="projectinput1">Task Title</label>
+        <div class="input-group">
+          <input type="text" class="form-control" formControlName="title" placeholder="Task title"
+            aria-describedby="basic-addon3">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="projectinput1">Task Description</label>
+        <div class="input-group">
+          <textarea type="text" class="form-control" formControlName="description" placeholder="Description"
+            aria-describedby="basic-addon3"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" [disabled]="!addTaskForm.valid" class="btn btn-primary btn-raised">
+        <i class="fa fa-check-square-o"></i>Save</button>
+      <button type="button" #close class="btn btn-secondary btn-raised" (click)="c('Close click')">Close</button>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #updateTaskContent let-c="close" let-d="dismiss">
+  <form [formGroup]="updateTaskForm" (ngSubmit)="onUpdateTask()">
+    <div class="modal-header">
+      <h4 class="modal-title">Update Task</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="projectinput1">Task Title</label>
+        <div class="input-group">
+          <input type="text" class="form-control" formControlName="title" ngModel="{{task.title}}"
+            placeholder="Task Title" aria-describedby="basic-addon3">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="projectinput1">Task Description</label>
+        <div class="input-group">
+          <input type="text" class="form-control" formControlName="description" ngModel="{{task.description}}"
+            placeholder="Task description" aria-describedby="basic-addon3">
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="submit" [disabled]="!updateTaskForm.valid" class="btn btn-primary btn-raised">
+        <i class="fa fa-check-square-o"></i>Save</button>
+      <button type="button" #close class="btn btn-secondary btn-raised" (click)="c('Close click')">Close</button>
+    </div>
+  </form>
+</ng-template>
