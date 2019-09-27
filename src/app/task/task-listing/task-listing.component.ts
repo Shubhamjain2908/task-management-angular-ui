@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, ModalDismissReasons, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import * as alertFunctions from '../../shared/data/sweet-alert'
+import * as alertFunctions from '../../shared/data/sweet-alert';
 import swal from 'sweetalert2';
 import { noWhitespaceValidator } from 'app/utils/custom-validators';
 import { TaskService } from '../task.service';

@@ -37,4 +37,8 @@ export class AuthService {
       return false;
     }
   }
+
+  changePassword(data): Observable<any> {
+    return this.http.post('change_password', data);
+  }
 }
